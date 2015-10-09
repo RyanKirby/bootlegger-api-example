@@ -1,0 +1,28 @@
+{
+  "name": "javascript",
+  "version": "0.0.0",
+  "authors": [
+    "Tom Bartindale <tom@bartindale.com>"
+  ],
+  "description": "",
+  "main": "index.html",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.7",
+    "ui.bootstrap": "~0.13.4",
+    "bootstrap": "~3.3.5",
+    "angular-sanitize": "*",
+    "socket.io.client":"*",
+    "angular-sails":"*"
+  }
+}
