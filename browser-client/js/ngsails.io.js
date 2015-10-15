@@ -298,7 +298,7 @@ angular.module('angularSails.io', [])
                 if (!data)
                     data = {};
 
-                data.apikey = apikey;
+                data.apikey = APIKEY;
 
                 return this._request({
                     method: 'get',
@@ -311,7 +311,7 @@ angular.module('angularSails.io', [])
 
                 if (!data)
                     data = {};
-                data.apikey = apikey;
+                data.apikey = APIKEY;
 
                 return this._request({
                     method: 'post',
