@@ -1,5 +1,11 @@
 #Javascript Example Client for Bootlegger
 
+This example shows how to implement the login workflow for the Bootlegger API, and some of the following:
+- Accessing shoots and media for the logged in user.
+- Connecting as a client to the real-time direction engine.
+
+## Getting Going
+
 > Requirements for the examples:
 
 > Bower, NodeJS + NPM
