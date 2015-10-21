@@ -3,7 +3,7 @@
 /**
  * FILL IN THESE SETTINGS WITH YOUR OWN
  */
-var APIKEY = "0bdf30fb-871e-45bd-b1f3-febd5160f6a3";
+var APIKEY = "<FILL ME IN>";
 var APIURL = "http://localhost:1337";
 
 /**
