@@ -20,7 +20,7 @@ Sign-up for an API key on a bootlegger server (e.g. https://bootlegger.tv)
 
 Enter http://localhost:3000/authcomplete as your redirect URL.
 
-Edit the `APIKEY` and `APISERVER` variables in index.js.
+Edit the `APIKEY` and `APISERVER` variables in `index.js` and `js/client_controller.js`.
 
 `$ node index.js`
 
