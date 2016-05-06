@@ -1,0 +1,95 @@
+<section ng-controller="MiscController">
+    <div class="row" ng-init="init()">
+        <div class="col-xs-12">
+
+            <h1>Welcome to the Bootlegger API</h1>
+            <br>
+            <div class="alert alert-warning">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <h3>What is this?</h3>
+                        <p>This is an <b>example/tutorial web app using the Bootlegger API</b>. It is a fully working
+                            example created with <b>Angular.js</b>. It is a great place to start if you are trying to
+                            get familiar with the Bootlegger API. It uses every Bootlegger API endpoint allowing you to
+                            directly copy code and use it in your own project.</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <h3>API Info!</h3>
+                        <p>Whenever you see a
+                            <a tabindex="0" class="" role="button" data-toggle="popover" data-trigger="focus"
+                               title="/api/path"
+                               data-content="I will give you juicy info on the API Endpoint and code used! :)"
+                               style="font-size: 15px;"><span class="glyphicon glyphicon-info-sign"></span></a>
+                            button click on it to find out details about what <b>API Endpoint</b> is being used and
+                            some information on what it does. It will also point you to the controller.js file the code
+                            is being used in so you can copy code to use in your own app!
+                        </p>
+                    </div>
+                    <div class="col-sm-4">
+                        <h3>Lets get started!</h3>
+                        <p><b>Firstly, lets kick things off by logging in!</b> Click on 'Sign In' on the top bar above!
+                        </p>
+                        <p>
+                            <small>Note: If you are on a browser with console access (such as Chrome or FireFox), open the console
+                                to see the API Endpoints been called and the response from the Bootlegger API.
+                            </small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-info" ng-if="btlStatus.msg === 'ok'">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3>Current Bootlegger Status
+                            <a tabindex="0" class="" role="button" data-toggle="popover" data-trigger="focus"
+                               title="/api/status"
+                               data-content="Gets Bootlegger status. See public/ng/controllers/misc_controller.js"
+                               style="font-size: 15px;"><span class="glyphicon glyphicon-info-sign"></span></a>
+                        </h3>
+
+                        <div class="col-sm-4">
+                            <p>Server:</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p><b>Congratulations!</b> You have managed to successfully connect to the Bootlegger
+                                API.
+                            </p>
+                            <p>Bootlegger status is {{btlStatus.msg}} and is running version
+                                {{btlStatus.version}}.</p>
+                        </div>
+                    </div>
+                </div>
+                <!--This script is for the information popups and can be ignored-->
+                <script>
+                    $(function () {
+                        $('[data-toggle="popover"]').popover({
+                            animated: 'fade',
+                            placement: 'right',
+                        })
+                    })
+                </script>
+            </div>
+            <div class="alert alert-danger" ng-if="btlStatus.msg != 'ok'">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3>Current Bootlegger Status</h3>
+
+                        <div class="col-sm-4">
+                            <p>Server:</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p><b>Disaster!</b> You have not yet managed to connect to the Bootlegger API.</p>
+                            <p>Please check your config settings in <b>index.js</b> and <b>public/ng/service/api_config_service.js</b>
+                                are correct by checking that you have entered the correct API Key and the correct
+                                URL
+                            </p>
+                            <p>If you are getting a - <b>No 'Access-Control-Allow-Origin'</b> - error make sure have
+                                correctly entered http or https for the URL config.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

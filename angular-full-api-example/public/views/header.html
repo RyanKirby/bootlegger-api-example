@@ -1,0 +1,47 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">BootleggerAPI</a>
+        </div>
+
+        <div ng-if="!loggedin" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/auth">Sign In</a></li>
+            </ul>
+        </div>
+
+        <div ng-if="loggedin" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="nav navbar-nav navbar-right">
+            <div class="profile-pic">
+                <img src="{{me.profile.photos[0].value}}" alt="{{me.profile.displayName}}">
+            </div>
+                </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="">{{me.profile.displayName}}</a></li>
+                <li><a href="" ng-click="logOut()"><span class="glyphicon glyphicon-log-in"></span></a></li>
+                <li>
+                <a tabindex="0" class="" role="button" data-toggle="popovernav" data-trigger="focus" title="/api/profile/me"
+                   data-content="This endpoint retrieve data about the user. See public/ng/controllers/client_controller.js"
+                   style="font-size: 15px;"><span class="glyphicon glyphicon-info-sign"></span></a>
+                </li>
+                <!--This script is for the popover and can be ignored-->
+                <script>
+                    $(function () {
+                        $('[data-toggle="popovernav"]').popover({
+                            animated: 'fade',
+                            placement: 'left'
+                        })
+                    })
+                </script>
+            </ul>
+        </div>
+    </div>
+</nav>

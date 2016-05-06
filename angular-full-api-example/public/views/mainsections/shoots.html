@@ -1,0 +1,45 @@
+<div ng-if="currentshoot">
+    {{currentshoot}}
+</div>
+
+<h1>My Shoots
+    <a tabindex="0" class="" role="button" data-toggle="popover" data-trigger="focus" title="/api/profile/mine"
+       data-content="List the current user's shoots. See public/ng/controllers/client_controller.js"
+       style="font-size: 15px;"><span class="glyphicon glyphicon-info-sign"></span></a>
+</h1>
+<div ng-repeat="shoot in myshoots">
+    <div class="col-xs-12 shoot-container">
+        <div class="col-md-4">
+            <img ng-if="shoot.iconbackground" class="shoot-img" src="{{shoot.iconbackground}}" alt="{{shoot.name}}">
+            <div ng-if="!shoot.iconbackground" class="text-center shoot-noimg">
+                <h3 class="shoot-name">No Image</h3>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div ng-if="!shoot.group">
+                <h4>{{shoot.name}}</h4>
+                <p>{{shoot.description}}</p>
+                <a href="#" ng-click="connect(shoot.id)">contribute</a> |
+                <a href="#" ng-click="view(shoot.id)">view</a>
+            </div>
+            <div ng-if="shoot.group && shoot.events.length>0">
+                {{shoot.group}}
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="s in shoot.events">{{s.name}} |
+                        <a href="#" ng-click="connect(s.id)">contribute</a>
+                        | <a href="#" ng-click="view(s.id)">view</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--This script is for the information popups and can be ignored-->
+<script>
+    $(function () {
+        $('[data-toggle="popover"]').popover({
+            animated: 'fade',
+            placement: 'right'
+        })
+    })
+</script>

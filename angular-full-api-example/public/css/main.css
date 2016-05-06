@@ -1,0 +1,28 @@
+.content {
+    margin-top: 60px;
+}
+
+.profile-pic {
+    float: left;
+    width: 50px;
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.shoot-container {
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.shoot-img {
+    width:230px;
+}
+
+.shoot-noimg{
+    width:230px;height:100px;
+    background: grey;
+}
+
+.shoot-name{
+    padding-top: 35px;
+}

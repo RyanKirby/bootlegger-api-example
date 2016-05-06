@@ -1,0 +1,77 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Bootlegger API Example</title>
+    <meta name="description" content="">
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+        var API_KEY = '0bdf30fb-871e-45bd-b1f3-febd5160f6a3';
+        var BOOTLEGGER_SERVER = 'http://localhost:1337'
+    </script>
+
+    <!--include js files-->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="js/bootlegger_sails.io.js"></script>
+    <script src="js/ngsails.io.js"></script>
+    <script src="public/ng/app.js"></script>
+    <script src="public/ng/controllers/client_controller.js"></script>
+    <script src="public/ng/controllers/misc_controller.js"></script>
+    <script src="public/ng/controllers/view_controller.js"></script>
+    <script src="public/ng/service/api_config_service.js"></script>
+    <script src="public/ng/service/console_log_service.js"></script>
+    <!--/include js files-->
+
+    <!--inckude css files-->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="public/css/main.css">
+    <!--/include css files-->
+
+    <style>
+        .grid li {
+            display: inline-block;
+        }
+
+        .grid ul {
+            list-style: none;
+        }
+    </style>
+
+</head>
+<body ng-app="bootleggerApp">
+<!--[if lt IE 8]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+
+
+<div class="container" ng-controller="client">
+    <!--Header/Navbar-->
+    <section ng-include="'public/views/header.html'"></section>
+    <!--/Header/Navbar-->
+
+
+    <!--Body/Content-->
+    <section class="content" ng-init="init();">
+
+        <!--Signed out-->
+        <div ng-if="!loggedin">
+            <section ng-include="'public/views/homepage.html'"></section>
+        </div> <!--Signed out-->
+
+        <!--Signed in-->
+        <div ng-if="loggedin">
+            <section ng-include="'public/views/main.html'"></section>
+        </div> <!--/Signed in-->
+    </section>
+    <!--/Body/Content-->
+
+    <!--This script is for the information popups and can be ignored-->
+</div>
+</body>
+</html>

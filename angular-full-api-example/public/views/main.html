@@ -1,0 +1,14 @@
+<div classs="row" ng-controller="ViewController">
+    <div class="col-sm-2">
+        <h2><span class="glyphicon glyphicon-th-list" style="font-size: 20px"> </span> Menu</h2>
+        <ul class="nav nav-pills nav-stacked">
+            <li role="presentation" ng-click="view = 'shoots'" ng-class="{'active': view=== 'shoots'}"><a href="">Shoots</a></li>
+            <li role="presentation"  ng-click="view = 'map'" ng-class="{'active': view=== 'map'}"><a href="">Docs</a></li>
+            <li role="presentation"><a href="">...</a></li>
+        </ul>
+    </div>
+    <div class="col-sm-10">
+        <section ng-if="view==='shoots'" ng-include="'public/views/mainsections/shoots.html'"></section>
+        <section ng-if="view==='map'" ng-include="'public/views/mainsections/map.html'"></section>
+    </div>
+</div>
