@@ -1,0 +1,222 @@
+<div ng-init="view = 'shoots'">
+    <div class="col-sm-2">
+        <section ng-include="'public/views/mainsections/sidebar.html'"></section>
+    </div>
+
+    <div class="col-sm-10" ng-controller="ShootController" ng-init="shootInit()">
+        <ul class="nav nav-tabs" ng-init="shootView = 'shoot'">
+            <li role="presentation" ng-click="shootView = 'shoot'" ng-class="shootView === 'shoot' ? 'active': ''"><a
+                    href="">My Shoot</a></li>
+            <li role="presentation" ng-click="shootView = 'edit'"
+                ng-class="shootView === 'edit' ? 'active': ''"><a href="">Edit Event-Type</a>
+            </li>
+            <li role="presentation"><a href=""></a></li>
+        </ul>
+
+        <!--Code for My Shoot Tab-->
+        <div ng-if="shootView === 'shoot'">
+
+            <!--Code listing Shoot details-->
+            <h2>{{shoot.name}}
+                <a tabindex="0" class="" role="button" data-toggle="popover" data-trigger="focus"
+                   title="/api/shoot/connect:id"
+                   data-content="Finds and joins a shoot using its id. This will return a JSON object with all the related shoot details. See public/ng/controllers/shoot_controller.js"
+                   style="font-size: 15px;"><span class="glyphicon glyphicon-info-sign"></span></a>
+            </h2>
+            <div class="alert alert-info">
+                <div>
+                    <p>{{shoot.starts}} to {{shoot.ends}}</p>
+                    <p><b>Description</b></p>
+                    <p>{{shoot.description}}</p>
+                    <p><b>Shots</b>
+                        <small>Click a shot to remove it from shoot</small>
+                    </p>
+                    <p><span ng-repeat="shot in shoot.shottypes">
+                        <a href="" ng-click="removeShot($index)">{{shot.name}}</a> - </span>
+                    </p>
+                </div>
+                <button class="btn btn-primary" ng-click="updateShots()">Update Shots</button>
+                <a tabindex="0" class="" role="button" data-toggle="popover" data-trigger="focus"
+                   title="/api/commission/updateshots/:id"
+                   data-content="Updates the shots for a given shoot with its shoot id. Posts a JSON object of new/modified shots. See public/ng/controllers/shoot_controller.js"
+                   style="font-size: 15px;"><span class="glyphicon glyphicon-info-sign"></span></a>
+                <span class="text-primary"> <b>{{resp.msg}}</b></span>
+            </div>
+            <!--/Code listing Shoot details-->
+
+            <!--Code to list all shoot media for shoot-->
+            <h2>List All Shoot Media
+                <a tabindex="0" class="" role="button" data-toggle="popover" data-trigger="focus"
+                   title="/api/media/shoot/:id"
+                   data-content="Returns all media associated with a particular shoot using the shoots id. See public/ng/controllers/shoot_controller.js"
+                   style="font-size: 15px;"><span class="glyphicon glyphicon-info-sign"></span></a>
+            </h2>
+            <div class="col-xs-12">
+                <p class="col-xs-12">Total media : {{allMedia.length}}
+                    <small>limits to 12 clips</small>
+                </p>
+                <div ng-if="allMedia.length === 0">
+                    <p>You have not uploaded any media!</p>
+                </div>
+                <div class="col-xs-3" ng-repeat="media in allMedia | limitTo: 12">
+                    <div>
+                        <img ng-src="{{media.thumb}}" alt="{{media.id}}" style="width:100%">
+                    </div>
+                    <p>
+                        <small><i>by {{media.user.profile.displayName}}</i></small>
+                        <a href="" ng-click="selectMedia(media)">Select Media</a>
+                    </p>
+
+                </div>
+            </div>
+            <!--/Code to list all shoot media for shoot-->
+
+            <!--Code to List Users Shoot Media-->
+            <h2>List Users Shoot Media
+                <a tabindex="0" class="" role="button" data-toggle="popover" data-trigger="focus"
+                   title="/api/media/mymedia/:id"
+                   data-content="List all the media from a given shoot shot by the current user. Search via shoot id. See public/ng/controllers/shoot_controller.js"
+                   style="font-size: 15px;"><span class="glyphicon glyphicon-info-sign"></span></a>
+            </h2>
+            <div class="col-xs-12">
+                <p class="col-xs-12">Total media : {{ownMedia.length}}
+                    <small>limits to 12 clips</small>
+                </p>
+                <div ng-if="ownMedia.length === 0">
+                    <p>You have not uploaded any media!</p>
+                </div>
+                <div class="col-xs-3" ng-repeat="media in ownMedia | limitTo: 12">
+                    <div>
+                        <img ng-src="{{media.thumb}}" alt="{{media.id}}" style="width:100%">
+                    </div>
+                    <p>
+                        <small><i>by {{media.user.profile.displayName}}</i></small>
+                        <a href="" ng-click="selectMedia(media)">Select Media</a>
+                    </p>
+
+                </div>
+            </div>
+            <!--/Code to List Users Shoot Media-->
+
+            <!--This script is for the information popups and can be ignored-->
+            <script>
+                $(function () {
+                    $('[data-toggle="popover"]').popover({
+                        animated: 'fade',
+                        placement: 'right'
+                    })
+                })
+            </script><!--This script is for the information popups and can be ignored-->
+
+            <!--Code for Selected Media. Is initially hidden-->
+            <div ng-if="selectedMedia">
+                <h2>Selected Media</h2>
+                <div class="alert alert-info">
+                    <p><b>Id:</b> {{selectedMedia.id}}</p>
+                    <p><b>Event id:</b> {{selectedMedia.event_id}}</p>
+                    <p><b>Original Path:</b> {{selectedMedia.originalpath}}</p>
+                    <p><b>Create by:</b> {{selectedMedia.user.profile.displayName}}</p>
+                    <h4>Options:</h4>
+                    <button class="btn btn-success" ng-click="getVideo(selectedMedia.id)">Get Full Media</button>
+                    <a tabindex="0" class="" role="button" data-toggle="popoverbtn" data-trigger="focus"
+                       title="/api/media/full/:id"
+                       data-content="Get full video for specific media. Use a medias id. See public/ng/controllers/shoot_controller.js"
+                       style="font-size: 15px;"><span class="glyphicon glyphicon-info-sign"></span></a> ||
+
+                    <button class="btn btn-success" ng-click="getMediaPrev(selectedMedia.id)">Get Media Preview</button>
+                    <a tabindex="0" class="" role="button" data-toggle="popoverbtn" data-trigger="focus"
+                       title="/api/media/preview/:id"
+                       data-content="Get preview video for media. Use a medias id. See public/ng/controllers/shoot_controller.js"
+                       style="font-size: 15px;"><span class="glyphicon glyphicon-info-sign"></span></a> ||
+
+                    <button class="btn btn-success" ng-click="getThumb(selectedMedia.id)">Get Thumb</button>
+                    <a tabindex="0" class="" role="button" data-toggle="popoverbtn" data-trigger="focus"
+                       title="/api/media/thumbnail/:id"
+                       data-content="Get thumbnail for specific media. Use a medias id. See public/ng/controllers/shoot_controller.js"
+                       style="font-size: 15px;"><span class="glyphicon glyphicon-info-sign"></span></a> ||
+
+                    <button class="btn btn-success" ng-click="removeMedia(selectedMedia.id)">Remove Media</button>
+                    <a tabindex="0" class="" role="button" data-toggle="popoverbtn" data-trigger="focus"
+                       title="/api/media/remove/:id"
+                       data-content="Indicate media has been removed by the user. Use a medias id. See public/ng/controllers/shoot_controller.js"
+                       style="font-size: 15px;"><span class="glyphicon glyphicon-info-sign"></span></a>
+                    <br><br>
+
+                    <p class="text-warning" ng-if="thumb"> The link <a href="{{thumb}}">{{thumb}}</a> will return a thumbnail image for the media id {{selectedMedia.id}} by {{selectedMedia.user.profile.displayName}}.</p>
+                    <p class="text-warning" ng-if="fullVideo"> The link <a href="{{fullVideo}}">{{fullVideo}}</a> will return a full video for the media id {{selectedMedia.id}} by {{selectedMedia.user.profile.displayName}}.</p>
+                    <p class="text-warning" ng-if="perviewVideo"> The link <a href="{{perviewVideo}}">{{perviewVideo}}</a> will return a preview video for the media id {{selectedMedia.id}} by {{selectedMedia.user.profile.displayName}}.</p>
+
+
+                    <!--This script is for the information popups and can be ignored-->
+                    <script>
+                        $(function () {
+                            $('[data-toggle="popoverbtn"]').popover({
+                                animated: 'fade',
+                                placement: 'right'
+                            })
+                        })
+                    </script><!--/This script is for the information popups and can be ignored-->
+                </div>
+            </div><!--/Code for Selected Media. Is initially hidden-->
+        </div><!--/Code for My Shoot Tab-->
+
+        <!--Code for Edit Event-Type Tab-->
+        <div ng-if="shootView === 'edit'" ng-init="selectEventType()">
+            <h2>Edit Template
+                <a tabindex="0" class="" role="button" data-toggle="popoverevent" data-trigger="focus"
+                   title="/api/commission/gettemplate/:id"
+                   data-content="Returns eventtype data for a given shoot. See public/ng/controllers/shoot_controller.js"
+                   style="font-size: 15px;"><span class="glyphicon glyphicon-info-sign"></span></a>
+            </h2>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Title</span>
+                <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1"
+                       ng-model="template.name">
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Description</span>
+                <textarea class="form-control" ng-model="template.description" placeholder="Username"
+                          aria-describedby="basic-addon1" ng-model="template.name"></textarea>
+            </div> <br>
+
+            <button class="btn btn-success" ng-click="updateTemp()">Update EventType</button>
+            <a tabindex="0" class="" role="button" data-toggle="popoverevent" data-trigger="focus"
+               title="/api/commission/update/:id"
+               data-content="Takes eventtype data and updates a specified shoots eventtype. See public/ng/controllers/shoot_controller.js"
+               style="font-size: 15px;"><span class="glyphicon glyphicon-info-sign"></span></a>
+
+
+            <span class="">{{updateTempResp.msg}}</span>
+
+            <script>
+                $(function () {
+                    $('[data-toggle="popoverevent"]').popover({
+                        animated: 'fade',
+                        placement: 'right'
+                    })
+                })
+            </script><!--/This script is for the information popups and can be ignored-->
+        </div>
+        <!--/Code for Edit Event-Type Tab-->
+
+
+        <a href="{{api.url + '/data/' + shootId  + '.zip' + api.key}}">Download Zip</a>
+        <a tabindex="0" class="" role="button" data-toggle="popoverevent" data-trigger="focus"
+           title="/data/:id.zip"
+           data-content="These assets are also available directly from the /data/images and /data/icons URL on the server. Filenames are provided in each shot object in the template. See public/view/mainsections/shoot.html"
+           style="font-size: 15px;"><span class="glyphicon glyphicon-info-sign"></span></a>
+        <!--This script is for the information popups and can be ignored-->
+        <script>
+            $(function () {
+                $('[data-toggle="popoverevent"]').popover({
+                    animated: 'fade',
+                    placement: 'right'
+                })
+            })
+        </script><!--/This script is for the information popups and can be ignored-->
+
+
+    </div>
+</div>
+

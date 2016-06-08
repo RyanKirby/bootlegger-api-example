@@ -19,10 +19,11 @@
   ],
   "dependencies": {
     "angular": "~1.4.7",
-    "ui.bootstrap": "~0.13.4",
+    "angular-animate": "~1.5.3",
     "bootstrap": "~3.3.5",
     "angular-sanitize": "*",
-    "socket.io.client":"*",
-    "angular-sails":"*"
+    "socket.io.client": "*",
+    "angular-sails": "*",
+    "angular-route": "^1.5.5"
   }
 }

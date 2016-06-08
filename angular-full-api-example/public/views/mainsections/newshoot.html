@@ -1,0 +1,158 @@
+<div ng-init="view = 'new'">
+    <div class="col-sm-2">
+        <section ng-include="'public/views/mainsections/sidebar.html'"></section>
+    </div>
+    <div ng-controller="CommissionController">
+        <div class="col-sm-10">
+            <h1>New Shoot</h1>
+        </div>
+        <div class="col-sm-8" ng-init="comInit()">
+            <h2>Select Template
+                <a tabindex="0" class="" role="button" data-toggle="popover" data-trigger="focus"
+                   title="/api/commission/seedtemplates"
+                   data-content="List all seed templates to be used for a shoot. See public/ng/controllers/ commission_controller.js"
+                   style="font-size: 15px;"><span class="glyphicon glyphicon-info-sign"></span></a>
+            </h2>
+            <div ng-if="!selectedTemp">
+                <ul class="list-group" ng-repeat="temp in templates">
+                    <li class="list-group-item">
+                        <h4>{{temp.name}}</h4>
+                        <p>{{temp.description}}</p>
+                        <button class="btn btn-default" ng-click="selectTemp(temp)">Select</button>
+                    </li>
+                </ul>
+            </div>
+            <div ng-if="selectedTemp">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <h4>{{selectedTemp.name}}</h4>
+                        <p>{{selectedTemp.description}}</p>
+                        <h5>Shots <small>Click to remove from list</small></h5>
+                        <p>
+                            <small><span ng-repeat="shot in selectedTemp.shot_types">
+                                <a href="" ng-click="removeShot($index)">{{shot.name}}</a> - </span></small>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            <!--This script is for the information popups and can be ignored-->
+            <script>
+                $(function () {
+                    $('[data-toggle="popover"]').popover({
+                        animated: 'fade',
+                        placement: 'right'
+                    })
+                })
+            </script>
+            <!--/This script is for the information popups and can be ignored-->
+            <div>
+                <h2>Shoot Info
+                    <a tabindex="0" class="" role="button" data-toggle="seedtemppop" data-trigger="focus"
+                       title="/api/shoot/create"
+                       data-content="Takes shoot params and uses them to create a new shoot. See public/ng/controllers/ commission_controller.js"
+                       style="font-size: 15px;"><span class="glyphicon glyphicon-info-sign"></span></a>
+                </h2>
+                <div>
+                    <form>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="name">Shoot Name</span>
+                            <input type="text" class="form-control" ng-model="name" placeholder="Name" aria-describedby="basic-addon1">
+                        </div> <br>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="starts">Start Date</span>
+                            <input type="text" class="form-control" ng-model="starts" placeholder="dd-mm-yyyy" aria-describedby="basic-addon1">
+                        </div> <br>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="starts-time">Start Date</span>
+                            <input type="text" class="form-control" ng-model="startstime" placeholder="nn:nn(am/pm)" aria-describedby="basic-addon1">
+                        </div> <br>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="ends">End Date</span>
+                            <input type="text" class="form-control" ng-model="ends" placeholder="dd-mm-yyyy" aria-describedby="basic-addon1">
+                        </div> <br>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="ends-time">End Time</span>
+                            <input type="text" class="form-control" ng-model="endstime" placeholder="nn:nn(am/pm)" aria-describedby="basic-addon1">
+                        </div> <br>
+                        <div>
+                            <span>Agree terms and conditions : </span><input type="checkbox" ng-model="agree"><br>
+                        </div> <br>
+
+                        <button class="btn btn-primary" ng-click="createShoot()">Create</button>
+
+                        <div ng-if="shootResp" class="alert alert-info">
+                            <h3>API Response!</h3>
+                            <p>{{shootResp}}</p>
+                        </div>
+
+                        <!--This script is for the information popups and can be ignored-->
+                        <script>
+                            $(function () {
+                                $('[data-toggle="seedtemppop"]').popover({
+                                    animated: 'fade',
+                                    placement: 'right'
+                                })
+                            })
+                        </script>
+                        <!--/This script is for the information popups and can be ignored-->
+                    </form>
+                </div>
+
+                <div ng-if="seedTemp">
+                    <h2>Seed Template
+                        <a tabindex="0" class="" role="button" data-toggle="seedtemppop" data-trigger="focus"
+                           title="/api/commission/getseedtemplate/:id"
+                           data-content="Returns a specific seed template from an id. See public/ng/controllers/ commission_controller.js"
+                           style="font-size: 15px;"><span class="glyphicon glyphicon-info-sign"></span></a>
+                    </h2>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <h4>{{seedTemp.name}}</h4>
+                            <p>{{seedTemp.description}}</p>
+                            <h5>Shots</h5>
+                            <p>
+                                <small><span ng-repeat="shot in seedTemp.shot_types">
+                                <a href="">{{shot.name}}</a> - </span></small>
+                            </p>
+                        </li>
+                    </ul>
+                    <!--This script is for the information popups and can be ignored-->
+                    <script>
+                        $(function () {
+                            $('[data-toggle="seedtemppop"]').popover({
+                                animated: 'fade',
+                                placement: 'right'
+                            })
+                        })
+                    </script>
+                    <!--/This script is for the information popups and can be ignored-->
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-2">
+            <h2>Shots
+                <a tabindex="0" class="" role="button" data-toggle="popovershots" data-trigger="focus"
+                   title="/api/commission/seedtemplates"
+                   data-content="List all seed templates to be used for a shoot. See public/ng/controllers/ commission_controller.js"
+                   style="font-size: 15px;"><span class="glyphicon glyphicon-info-sign"></span></a>
+            </h2>
+            <h5>- Click to add -</h5>
+            <div  style="height:300px;overflow-y: scroll">
+            <p ng-repeat="shot in shots">
+                <a href="" ng-click="addShot(shot)">{{shot.name}}</a>
+            </p>
+            </div>
+        </div>
+        <!--This script is for the information popups and can be ignored-->
+        <script>
+            $(function () {
+                $('[data-toggle="popovershots"]').popover({
+                    animated: 'fade',
+                    placement: 'left'
+                })
+            })
+        </script>
+        <!--/This script is for the information popups and can be ignored-->
+    </div>
+</div>

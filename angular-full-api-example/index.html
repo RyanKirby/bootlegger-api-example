@@ -13,22 +13,25 @@
     </script>
 
     <!--include js files-->
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="js/bootlegger_sails.io.js"></script>
+    <script src="public/lib/jquery/dist/jquery.min.js"></script>
+    <script src="public/lib/angular/angular.js"></script>
+    <script src="public/lib/angular-sanitize/angular-sanitize.js"></script>
+    <script src="public/lib/angular-route/angular-route.js"></script>
+    <script src="public/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!--<script src="js/bootlegger_sails.io.js"></script>-->
     <script src="js/ngsails.io.js"></script>
     <script src="public/ng/app.js"></script>
     <script src="public/ng/controllers/client_controller.js"></script>
     <script src="public/ng/controllers/misc_controller.js"></script>
-    <script src="public/ng/controllers/view_controller.js"></script>
+    <script src="public/ng/controllers/shoot_controller.js"></script>
+    <script src="public/ng/controllers/media_controller.js"></script>
+    <script src="public/ng/controllers/commission_controller.js"></script>
     <script src="public/ng/service/api_config_service.js"></script>
     <script src="public/ng/service/console_log_service.js"></script>
     <!--/include js files-->
 
     <!--inckude css files-->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="public/lib/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="public/css/main.css">
     <!--/include css files-->
 
@@ -49,25 +52,14 @@
     your browser</a> to improve your experience.</p>
 <![endif]-->
 
-
 <div class="container" ng-controller="client">
     <!--Header/Navbar-->
     <section ng-include="'public/views/header.html'"></section>
     <!--/Header/Navbar-->
 
-
     <!--Body/Content-->
     <section class="content" ng-init="init();">
-
-        <!--Signed out-->
-        <div ng-if="!loggedin">
-            <section ng-include="'public/views/homepage.html'"></section>
-        </div> <!--Signed out-->
-
-        <!--Signed in-->
-        <div ng-if="loggedin">
-            <section ng-include="'public/views/main.html'"></section>
-        </div> <!--/Signed in-->
+        <div ng-view></div>
     </section>
     <!--/Body/Content-->
 

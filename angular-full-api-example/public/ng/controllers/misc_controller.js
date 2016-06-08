@@ -12,7 +12,8 @@ bootleggerApp.controller('MiscController', ['$scope', '$http', 'Api', 'ConLog',
         var apiKey = Api.apiKey;
 
         /**
-         * Function to get current bootlegger status
+         * Title: Get Api Status
+         * Description: Function to get current bootlegger status
          * Endpoint: /api/status
          */
         function getApiStatus() {
@@ -29,8 +30,8 @@ bootleggerApp.controller('MiscController', ['$scope', '$http', 'Api', 'ConLog',
                 });
         };
 
-        /**
-         * Init scope functions called on page render
+        /*
+         * Scope functions called on page render
          */
         $scope.init = function () {
             getApiStatus();

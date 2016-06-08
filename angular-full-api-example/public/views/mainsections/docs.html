@@ -1,0 +1,159 @@
+<div ng-init="view = 'map'">
+    <div class="col-sm-2">
+        <section ng-include="'public/views/mainsections/sidebar.html'"></section>
+    </div>
+    <div class="col-sm-10">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>Documentation</h1>
+                <div class="alert alert-info">
+                    <p>This section will help you to navigate through the site and help you find a particular Api
+                        Endpoint. It
+                        also give a quick overview of the function of each API Endpoint.</p>
+                    <p>Whenever you see a
+                        <a tabindex="0" class="" role="button" data-toggle="popover" data-trigger="focus"
+                           title="/api/path"
+                           data-content="I will give you juicy info on the API Endpoint and code used! :)"
+                           style="font-size: 15px;"><span class="glyphicon glyphicon-info-sign"></span></a>
+                        button click on it to find out details about what <b>API Endpoint</b> is being used and
+                        some information on what it does. It will also point you to the controller.js file the code
+                        is being used in so you can copy code to use in your own app!
+                    </p>
+                    <p> Also rember to open the console if you can to see all server calls and the API's responses.</p>
+                    <p> Visit <a href="https://bootlegger.tv/api/docs">https://bootlegger.tv/api/docs</a>
+                        for more info.</p>
+                </div>
+                <div class="col-sm-3">
+                    <h4>Authentication:</h4>
+                </div>
+                <div class="col-sm-9">
+                    <div class="alert alert-warning">
+                        <p>Well well, you clever clogs! If you have gotten this far, you have already used an API
+                            Endpoint. Well
+                            done you! There are two main Authentication API Endpoints, <b>/api/auth/login</b> and <b>/api/auth/logout</b>.
+                            These are used in the NavBar fixed to the top of the screen</p>
+                        <p><i>To see an example of these working go to <b>index.js</b> and <b>public/ng/controllers/client_controller.js</b>.</i>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <h4>Profile:</h4>
+                </div>
+                <div class="col-sm-9">
+                    <div class="alert alert-warning">
+                        <p>get <b>/api/profile/mine</b></p>
+                        <p>Tested - This is used in the Shoots tab to list all the users shoots.</p>
+                        <p>get <b>/api/profile/me</b></p>
+                        <p>Tested - This retrieves data about the user. Example can be found in the Top Bar.</p>
+                        <p>get <b>/api/profile/contributed</b></p>
+                        <p>Tested - List all the shoots the user has contributed to. Example can be found on the Shoots page, in
+                            the 'Contributed' tab.</p>
+                        <p><i>To see an example of these working go to <b>public/ng/controllers/client_controller.js</b>.</i>
+                        </p>
+
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <h4>Commission:</h4>
+                </div>
+                <div class="col-sm-9">
+                    <div class="alert alert-warning">
+                        <p>get <b>/api/commission/seedtemplates</b></p>
+                        <p>Tested</p>
+                        <p>get <b>/api/commission/shots</b></p>
+                        <p>Tested</p>
+                        <p>get <b>/api/commission/getseedtemplate/:id</b></p>
+                        <p>Tested</p>
+                        <p>get <b>/api/commission/gettemplate/:id</b></p>
+                        <p>Route has been removed</p>
+                        <p>post <b>/api/commission/updateshots/:id</b></p>
+                        <p>Tested and validated.</p>
+                        <p>post <b>/api/commission/update/:id</b></p>
+                        <p></p>
+                    </div>
+                </div>
+
+
+                <div class="col-sm-3">
+                    <h4>Shoot Participation:</h4>
+                </div>
+                <div class="col-sm-9">
+                    <div class="alert alert-warning">
+                        <p><b>api/shoot/connect</b></p>
+                        <p>Tested</p>
+                        <p><b>/data/:id.zip</b></p>
+                        <p>Tested</p>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <h4>Media:</h4>
+                </div>
+                <div class="col-sm-9">
+                    <div class="alert alert-warning">
+                        <p><b>/api/media/shoot/connect/:id</b></p>
+                        <p>Tested</p>
+                        <p><b>/api/media/shoot/:id</b></p>
+                        <p>Tested - View a shoot page</p>
+                        <p><b>/api/media/mymedia/:id</b></p>
+                        <p>Tested - View a shoot page</p>
+                        <p><b>/api/media/full/:id</b></p>
+                        <p>Tested</p>
+                        <p><b>/api/media/preview/:id</b></p>
+                        <p>Tested</p>
+                        <p><b>/api/media/thumbnail/:id</b></p>
+                        <p>Tested</p>
+                        <p><b>/api/media/shoot/connect/:id</b></p>
+                        <p>Tested</p>
+                        <p><b>/api/media/remove/:id</b></p>
+                        <p>Needs to be tested to ensure is working correctly...</p>
+                    </div>
+
+                </div>
+
+                <div class="col-sm-3">
+                    <h4>Post Production:</h4>
+                </div>
+                <div class="col-sm-9">
+                    <div class="alert alert-warning">
+                        <p><b>/api/post/newedit</b></p>
+                        <p></p>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <h4>Shoot Management:</h4>
+                </div>
+                <div class="col-sm-9">
+                    <div class="alert alert-warning">
+                        <p>POST - <b>/api/shoot/create</b></p>
+                        <p>Tested and validated</p>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <h4>SOCKET IO Messages:</h4>
+                </div>
+                <div class="col-sm-9">
+                    <div class="alert alert-warning">
+                        <p>...
+                        <p>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <h4>Not Tested:</h4>
+                </div>
+                <div class="col-sm-9">
+                    <div class="alert alert-warning">
+                        <p>/api/media/create - what params? - this gives an error...<p>
+                        <p>/api/shoot/discon/:id - endpoint does not exist</p>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

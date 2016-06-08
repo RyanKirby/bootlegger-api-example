@@ -9,7 +9,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">BootleggerAPI</a>
+            <a class="navbar-brand" href="#/">BootleggerAPI</a>
         </div>
 
         <div ng-if="!loggedin" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -21,7 +21,7 @@
         <div ng-if="loggedin" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <div class="nav navbar-nav navbar-right">
             <div class="profile-pic">
-                <img src="{{me.profile.photos[0].value}}" alt="{{me.profile.displayName}}">
+                <img ng-src="{{me.profile.photos[0].value}}" alt="{{me.profile.displayName}}">
             </div>
                 </div>
             <ul class="nav navbar-nav navbar-right">

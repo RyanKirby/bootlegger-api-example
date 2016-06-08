@@ -30,4 +30,13 @@ bootleggerApp.service('ConLog', function () {
         console.log('------------------------------');
     }
 
+    this.err = function(url, resp){
+        console.error('------------------------------');
+        console.error('Api Request URL: ' + url);
+        console.error('API: Request Error!');
+        console.error('API response:');
+        console.error(resp);
+        console.error('------------------------------');
+    }
+
 });

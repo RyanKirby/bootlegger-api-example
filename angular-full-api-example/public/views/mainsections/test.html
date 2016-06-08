@@ -1,0 +1,13 @@
+<div ng-init="view = 'media'">
+    <div class="col-sm-2">
+        <section ng-include="'public/views/mainsections/sidebar.html'"></section>
+    </div>
+
+    <div ng-controller="MediaController" class="col-sm-10" ng-init="init()">
+        <h2>Testing the Media API Endpoints</h2>
+        <div class="alert alert-info">
+            <button ng-click="test()" class="btn btn-primary">Test</button>
+            <p>{{createMedia}}</p>
+        </div>
+    </div>
+</div>

@@ -1,45 +1,110 @@
-<div ng-if="currentshoot">
-    {{currentshoot}}
-</div>
-
-<h1>My Shoots
-    <a tabindex="0" class="" role="button" data-toggle="popover" data-trigger="focus" title="/api/profile/mine"
-       data-content="List the current user's shoots. See public/ng/controllers/client_controller.js"
-       style="font-size: 15px;"><span class="glyphicon glyphicon-info-sign"></span></a>
-</h1>
-<div ng-repeat="shoot in myshoots">
-    <div class="col-xs-12 shoot-container">
-        <div class="col-md-4">
-            <img ng-if="shoot.iconbackground" class="shoot-img" src="{{shoot.iconbackground}}" alt="{{shoot.name}}">
-            <div ng-if="!shoot.iconbackground" class="text-center shoot-noimg">
-                <h3 class="shoot-name">No Image</h3>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div ng-if="!shoot.group">
-                <h4>{{shoot.name}}</h4>
-                <p>{{shoot.description}}</p>
-                <a href="#" ng-click="connect(shoot.id)">contribute</a> |
-                <a href="#" ng-click="view(shoot.id)">view</a>
-            </div>
-            <div ng-if="shoot.group && shoot.events.length>0">
-                {{shoot.group}}
-                <ul class="list-group">
-                    <li class="list-group-item" ng-repeat="s in shoot.events">{{s.name}} |
-                        <a href="#" ng-click="connect(s.id)">contribute</a>
-                        | <a href="#" ng-click="view(s.id)">view</a></li>
-                </ul>
-            </div>
-        </div>
+<div ng-init="view = 'shoots'">
+    <div class="col-sm-2">
+        <section ng-include="'public/views/mainsections/sidebar.html'"></section>
     </div>
-</div>
 
-<!--This script is for the information popups and can be ignored-->
-<script>
-    $(function () {
-        $('[data-toggle="popover"]').popover({
-            animated: 'fade',
-            placement: 'right'
-        })
-    })
-</script>
+    <div class="col-sm-10">
+        <ul class="nav nav-tabs" ng-init="shootView = 'shoot'">
+            <li role="presentation" ng-click="shootView = 'shoot'" ng-class="shootView === 'shoot' ? 'active': ''"><a
+                    href="">My Shoots</a></li>
+            <li role="presentation" ng-click="shootView = 'contributed';getContributed();"
+                ng-class="shootView === 'contributed' ? 'active': ''"><a href="">Contributed</a>
+            </li>
+            <li role="presentation"><a href=""></a></li>
+        </ul>
+
+        <!--Code for listing all shoots-->
+        <div ng-if="shootView === 'shoot'">
+            <h2>Shoots
+                <a tabindex="0" class="" role="button" data-toggle="popover" data-trigger="focus"
+                   title="/api/profile/mine"
+                   data-content="List the current user's shoots. See public/ng/controllers/client_controller.js"
+                   style="font-size: 15px;"><span class="glyphicon glyphicon-info-sign"></span></a>
+            </h2>
+            <div ng-repeat="shoot in myshoots">
+                <div class="col-xs-12 shoot-container">
+                    <div class="col-md-4">
+                        <img ng-if="shoot.iconbackground" class="shoot-img" ng-src="{{shoot.iconbackground}}"
+                             alt="{{shoot.name}}">
+                        <div ng-if="!shoot.iconbackground && !shoot.group" class="text-center shoot-noimg">
+                            <h3 class="shoot-name">No Image</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div ng-if="!shoot.group">
+                            <h4>{{shoot.name}}
+                                <span class="text-success" ng-if="shoot.status === 'OWNER'"> - Owner</span>
+                                <span class="text-primary" ng-if="shoot.status !== 'OWNER'"> - Public</span></h4>
+                            <p>{{shoot.description}}</p>
+                            <a href="#/shoot/{{shoot.id}}">Connect</a>
+                        </div>
+                        <div ng-if="shoot.group && shoot.events.length>0">
+                            {{shoot.group}}
+                            <ul class="list-group">
+                                <li class="list-group-item" ng-repeat="s in shoot.events">{{s.name}} |
+                                    <a href="#" ng-click="connect(s.id)">contribute</a>
+                                    | <a href="#/shoot/{{shoot.id}}">view</a></li>
+                                <!--ng-click="view(s.id)-->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--This script is for the information popups and can be ignored-->
+            <script>
+                $(function () {
+                    $('[data-toggle="popover"]').popover({
+                        animated: 'fade',
+                        placement: 'right'
+                    })
+                })
+            </script>
+            <!--/This script is for the information popups and can be ignored-->
+        </div>
+        <!--Code for listing all shoots-->
+
+        <!--Code for listing contributed shoots-->
+        <div ng-if="shootView === 'contributed'">
+            <h2>Contributed shoots
+                <a tabindex="0" class="" role="button" data-toggle="popover" data-trigger="focus"
+                   title="/api/profile/contributed"
+                   data-content="List all shoots user has contributed to. See public/ng/controllers/client_controller.js"
+                   style="font-size: 15px;"><span class="glyphicon glyphicon-info-sign"></span></a>
+            </h2>
+            <div ng-repeat="shoot in contributed">
+                <div class="col-xs-12 shoot-container">
+                    <div class="col-md-4">
+                        <img ng-if="shoot.iconbackground && !shoot.group" class="shoot-img" ng-src="{{shoot.iconbackground}}"
+                             alt="{{shoot.name}}">
+                        <div ng-if="!shoot.iconbackground" class="text-center shoot-noimg">
+                            <h3 class="shoot-name">No Image</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div ng-if="!shoot.group">
+                            <h4>{{shoot.name}}
+                                <span class="text-success" ng-if="shoot.status === 'OWNER'"> - Owner</span>
+                                <span class="text-primary" ng-if="shoot.status !== 'OWNER'"> - Public</span></h4>
+                            <p>{{shoot.description}}</p>
+                            <a href="#" ng-click="connect(shoot.id)">contribute</a> |
+                            <a href="#/shoot/{{shoot.id}}">view</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--This script is for the information popups and can be ignored-->
+            <script>
+                $(function () {
+                    $('[data-toggle="popover"]').popover({
+                        animated: 'fade',
+                        placement: 'right'
+                    })
+                })
+            </script>
+            <!--/This script is for the information popups and can be ignored-->
+        </div>
+        <!--Code for listing contributed shoots-->
+
+    </div>
+
+</div>
