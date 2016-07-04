@@ -1,135 +1,56 @@
-#Javascript Example Client for Bootlegger
+# Angular example and tutorial for connecting to Bootlegger API
 
-This example shows how to implement the login workflow for the Bootlegger API, and some of the following:
-- Accessing shoots and media for the logged in user.
-- Connecting as a client to the real-time direction engine.
+This is an example web app created in AngularJS using a simple NodeJS/ExpressJS server. 
+The aim of this project is to give you an indication on how the Bootlegger API can be used. 
+This project will help you getting a basic web app running using some of the Bootlegger API endpoint and will help you to log in and ensure you have a connection to a Bootlegger Server.
+Feel free to use any code in your own project, or build upon the base code in this project. Also refer to the Bootlegger docs at https://bootlegger.tv/api/docs/ for any more information on the platform or any API endpoints. 
 
 ## Getting Going
+Please ensure you follow the steps below to get the example project up and running.
 
 > Requirements for the examples:
 
 > Bower, NodeJS + NPM
+Note: NPM can be installed from nodejs.org and bower from bower.io
 
-Run the following to get the example up and running:
+Using the terminal, please direct to the project folder directory and enter the following commands:
 
-`$ bower install`
+`npm install`
 
-`$ npm install`
+`bower install`
 
 Sign-up for an API key on a bootlegger server (e.g. https://bootlegger.tv)
 
 Enter http://localhost:3000/authcomplete as your redirect URL.
+Note: This is the url Bootlegger will redirect you to once you have signed in via bootleggers API login. If you do not have an account with bootlegger you will be required to create one. 
 
-Edit the `APIKEY` and `APISERVER` variables in `index.js` and `js/client_controller.js`.
+Click on Get API Key if one is not already generated. Copy this key!
 
-`$ node index.js`
+Open the file 'index.js' and 'public/ng/services/api_config_service.js'.
+
+In both files, you will see the following code:
+
+----CODE---
+//You need to fill these in! Go to https://bootlegger.tv/api/signup to get your API Key
+
+var APIKEY = "enter-api-key-here";//Enter you bootlegger api key here!
+var APIURL = "https://bootlegger.tv"; //Enter bootlegger url here!
+----END----
+
+In BOTH files, ensure that you paste the api key (you copied from the Bootlegger client) into the APIKEY variable. If you are not using bootlegger.tv, also specify the API Url which you are using.
+
+Save any changes, and you are all set!
+
+In the terminal type `node index.js` or `node index` to start the server.
+
+At this point, the server should start normally, and terminal should display:
+`Example app listening at http://:::3000`
+
+If this is not the case, check that NPM/Node and Bower have been correctly installed, and that the dependencies in node_modules and public/lib are not empty. (If they are, there is a problem with npm or bower install).
 
 Visit http://localhost:3000 in a browser.
 
-## Example Media Upload
+You can then follow the instruction in the web browser to get a feel for how the Bootlegger API works.
 
-This quick tutorial will show you how to get up and running with Bootlegger. You will perform 3 steps:
- - Login and retrieve a session key.
- - List shoots you have access to.
- - Upload the meta-data, thumbnail and video for a clip to this shoot.
-
-#### 1. Login
-Visit the <a href="#api-Authentication-login">login endpoint</a> in a browser, which will redirect you to the appropriate OAuth login page.
-
-Allow your browser to redirect! Depending on how you registered your API key, you will either be redirected to a domain of your selection with the valid session key appended as `<url>?sid=<sessionkey>`, or you will be redirected to `bootlegger://success?<sessionkey>`
-
-Append `sails.sid=` to `session` as a cookie in subsequent requests.
-
-#### 2. List Shoots Available
-Bootlegger keeps track of which shoots you can contribute to. Use the <a href="#api-Profile-mine">list shoots endpoint</a> to access yours. e.g.
-
-    <script>
-    $.get('/api/profile/mine?apikey=1234-1234-1234-1234').done(function(data)
-		{
-			//list of shoots
-			console.log(data);
-		})
-    </script>
-
-The `id` field is used in future requests to link media to a shoot.
-
-#### 3. Upload Media
-Once you have a `session` and `event id`, you can upload a clip. First, you need to create a new clip on the server, with all its associated meta-data, using the <a href="#api-Media-createmedia">create media endpoint</a> e.g.
-
-	<script>
-	var media = {
-		event_id:%event%,
-		created_by: %myuserid%,
-		captured_at: '3/13/2015 9:14:35 AM',
-		media_type: 'VIDEO',
-		clip_length:'0:34:0.0'
-
-		(any other key-value pairs of data or objects...)
-
-		(optional...)
-		filesize
-		local_filename
-		meta_phase
-		role
-		shot
-		shot_meta
-		coverage_class
-	};
-	$.post('/api/media/create?apikey=1234-1234-1234-1234',media).done(function(data)
-	{
-		//resulting media id
-		console.log(data.id);
-	})
-	</script>
-
-This will return a JSON object with an `id`, use this in the next steps:
-
-Get a url to upload the thumbnail to using the <a href="#api-Media-signuploadthumb">get thumbnail upload endpoint</a> e.g.
-
-
-
-	<script>
-	$.post('/api/media/signuploadthumb/%id%?apikey=1234-1234-1234-1234',{filename:'thumbnail.png'}).done(function(data)
-	{
-		//signed url
-		console.log(data.signed_request);
-	})
-	</script>
-
-Upload the thumbnail e.g.
-> This should be a PNG file, and must match the filename given in the previous step. Currently, you will need to name your file randomly (uuid) to avoid conflicts. In future releases the system will provide this name for you.
-
-`curl -v -X PUT -T "thumbnail.png" %signedurl%`
-
-Notify bootlegger that the thumbnail has uploaded using the <a href="#api-Media-s3notifythumb">notify thumb endpoint</a> e.g.
-
-	<script>
-	$.post('/api/media/uploadthumbcomplete/%id%?apikey=1234-1234-1234-1234',{filename:'thumbnail.png'}).done(function(data)
-	{
-		//complete
-	})
-	</script>
-
-Get a url to upload the video to using the <a href="#api-Media-signupload">get upload endpoint</a> e.g.
-
-	<script>
-	$.post('/api/media/signupload/%id%?apikey=1234-1234-1234-1234',{filename:'video.mp4'}).done(function(data)
-	{
-		//signed url
-		console.log(data.signed_request);
-	})
-	</script>
-
-Upload the video e.g.
-> This should be a MP4 (h.264,aac) file, and must match the filename given in the previous step. Currently, you will need to name your file randomly (uuid) to avoid conflicts. In future releases the system will provide this name for you.
-
-`curl -v -X PUT -T "video.mp4" %signedurl%`
-
-Notify bootlegger that the video has uploaded using the  <a href="#api-Media-s3notify">notify upload endpoint</a> e.g.
-
-	<script>
-	$.post('/api/media/uploadcomplete/%id%?apikey=1234-1234-1234-1234',{filename:'video.mp4'}).done(function(data)
-	{
-		//complete
-	})
-	</script>
+Navigate to public/ng/controllers directory to see Angular controllers with example http calls to the Bootlegger API.
+The controller files are named relative to the API endpoints - eg. commission_controller.js uses api endpoints '/commission/apiendpoint'.

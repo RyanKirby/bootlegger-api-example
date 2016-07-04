@@ -2,10 +2,12 @@
  * ENTER THIS INFORMATION BEFORE STARTING THE SERVER
  */
 
+
 //You need to fill these in! Go to https://bootlegger.tv/api/signup to get your API Key
 
 var APIKEY = "enter-api-key-here";//Enter you bootlegger api key here!
 var APIURL = "https://bootlegger.tv"; //Enter bootlegger url here!
+
 
 /**
  * DEMO SERVER CODE
